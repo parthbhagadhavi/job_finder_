@@ -1,0 +1,116 @@
+.job-poster {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4rem 2rem;
+  background: #f1f5f9;
+  font-family: 'Poppins', sans-serif;
+  gap: 2rem;
+}
+
+.poster-content {
+  flex: 1 1 50%;
+  max-width: 600px;
+}
+
+.poster-heading {
+  font-size: 3rem;
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
+.poster-heading span {
+  color: #facc15;
+}
+
+.poster-text {
+  font-size: 1.1rem;
+  color: #475569;
+  margin-bottom: 2rem;
+}
+
+.poster-btn {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+.poster-btn2 {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s ease;
+  margin-left: 20px;
+}
+
+.poster-btn:hover {
+  background-color: #1e3a8a;
+}
+.poster-btn2:hover {
+  background-color: #1e3a8a;
+}
+
+
+.poster-image {
+  flex: 1 1 45%;
+  text-align: center;
+}
+
+.poster-image img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 992px) {
+  .poster-content {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .poster-heading {
+    font-size: 2.5rem;
+  }
+
+  .poster-text {
+    font-size: 1rem;
+  }
+
+  .poster-image {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .job-poster {
+    padding: 2rem 1rem;
+  }
+
+  .poster-heading {
+    font-size: 2rem;
+  }
+
+  .poster-text {
+    font-size: 0.95rem;
+  }
+
+  .poster-btn {
+    padding: 0.65rem 1.2rem;
+    font-size: 0.95rem;
+  }
+    .poster-btn2 {
+    padding: 0.65rem 1.2rem;
+    font-size: 0.95rem;
+  }
+}

@@ -1,0 +1,82 @@
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px;
+  background-color: #f3f4f6;
+}
+
+.company-card {
+  width: 400px;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.company-card:hover {
+  transform: translateY(-10px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.company-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.card-body {
+  margin-top: 10px;
+}
+
+.card-footer {
+  margin-top: 15px;
+  text-align: right;
+}
+
+.apply-btn {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.apply-btn:hover {
+  background-color: #0056b3;
+}
+
+.description {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #555;
+}.add-job-container {
+  text-align: right;
+  padding: 20px 130px 0 40px;
+  background-color: #f3f4f6;
+
+}
+
+.add-job-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 18px;
+  font-size: 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.add-job-btn:hover {
+  background-color: #0056b3;
+}
