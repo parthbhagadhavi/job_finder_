@@ -26,7 +26,7 @@ const CompanyCards = () => {
             <p className="description">Work with modern UI technologies like React, Redux, and TypeScript.</p>
           </div>
           <div className="card-footer">
-        <a href="/applyform"> <button className="apply-btn">Apply Now</button></a>   
+       
           </div>
         </div>
 
@@ -46,7 +46,7 @@ const CompanyCards = () => {
             <p className="description">Learn from experts and build real-world projects using C#, .NET, and Azure.</p>
           </div>
           <div className="card-footer">
-        <a href="/applyform"> <button className="apply-btn">Apply Now</button></a>   
+      
           </div>
         </div>
 
@@ -66,7 +66,7 @@ const CompanyCards = () => {
             <p className="description">Develop APIs and backend systems using Node.js and AWS Lambda.</p>
           </div>
           <div className="card-footer">
-        <a href="/applyform"> <button className="apply-btn">Apply Now</button></a>   
+
           </div>
         </div>
 

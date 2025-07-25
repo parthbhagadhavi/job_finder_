@@ -1,115 +1,104 @@
-import React, { useState } from 'react';
-import './Add_job.css';
-import Nav from './nav';
-import Footer from './Footer';
-import axios from 'axios'
+import React, { useState } from "react";
+import "./Add_job.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const Add_job = () => {
+  let navigate=useNavigate()
   const [formData, setFormData] = useState({
-    company: '',
-    title: '',
-    type: '',
-    location: '',
-    description: ''
+    title: "",
+    company: "",
+    location: "",
+    type: "",
+    salary: "",
+    deadline: "",
+    experience: "",
+    qualification: "",
+    description: "",
+    skills: "",
+    logo: null,
+    website: "",
+    email: "",
+    category: "",
+    perks: "",
+    workingDays: "",
+    tags: ""
   });
 
   const handleChange = (e) => {
+    const { name, value, type, files } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: type === "file" ? files[0] : value
     });
   };
 
-  const handleSubmit = async(e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    console.log('Job Submitted:', formData);
-    alert("🎉 Job Added Successfully!");
+  const data = new FormData();
+  for (let key in formData) {
+    data.append(key, formData[key]);
+  }
 
-    setFormData({
-      company: '',
-      title: '',
-      type: '',
-      location: '',
-      description: ''
+  try {
+    await axios.post('http://localhost:3232/add-job', data, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
     });
-  };
+    alert("Job Posted Successfully!");
+navigate('/poster_page')
+  } catch (err) {
+    console.error("Error posting job", err);
+    alert("Error posting job.");
+  }
+};
+
 
   return (
-    <>
-    
-      <div className="job-form-container">
-        <h2><i className="fas fa-briefcase"></i> Add New Job</h2>
-        <form onSubmit={handleSubmit} className="job-form">
-          <div className="input-group">
-            <i className="fas fa-building"></i>
-            <input
-              type="text"
-              name="company"
-              placeholder="Company Name"
-              value={formData.company}
-              onChange={handleChange}
-              required
-            />
-          </div>
+    <div className="job-form-container">
+      <h2>Post a New Job</h2>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="title" placeholder="Job Title" onChange={handleChange} required />
+        <input type="text" name="company" placeholder="Company Name" onChange={handleChange} required />
+        <input type="text" name="location" placeholder="Job Location" onChange={handleChange} required />
 
-          <div className="input-group">
-            <i className="fas fa-id-badge"></i>
-            <input
-              type="text"
-              name="title"
-              placeholder="Job Title"
-              value={formData.title}
-              onChange={handleChange}
-              required
-            />
-          </div>
+        <select name="type" onChange={handleChange} required>
+          <option value="">-- Job Type --</option>
+          <option>Full-Time</option>
+          <option>Part-Time</option>
+          <option>Internship</option>
+          <option>Freelance</option>
+          <option>Contract</option>
+        </select>
 
-          <div className="input-group">
-            <i className="fas fa-clipboard-list"></i>
-            <select
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Job Type</option>
-              <option value="Full Time">Full Time</option>
-              <option value="Part Time">Part Time</option>
-              <option value="Internship">Internship</option>
-              <option value="Remote">Remote</option>
-            </select>
-          </div>
+        <input type="text" name="salary" placeholder="Salary Range (₹)" onChange={handleChange} />
+        <input type="date" name="deadline" onChange={handleChange} required />
+        <input type="text" name="experience" placeholder="Experience Required" onChange={handleChange} />
+        <input type="text" name="qualification" placeholder="Qualification / Education" onChange={handleChange} />
+        <textarea name="description" rows="4" placeholder="Job Description" onChange={handleChange} required />
+        <input type="text" name="skills" placeholder="Required Skills" onChange={handleChange} />
+        <input type="file" name="logo" onChange={handleChange} />
+        <input type="url" name="website" placeholder="Company Website" onChange={handleChange} />
+        <input type="email" name="email" placeholder="Recruiter Email" onChange={handleChange} required />
 
-          <div className="input-group">
-            <i className="fas fa-map-marker-alt"></i>
-            <input
-              type="text"
-              name="location"
-              placeholder="Job Location"
-              value={formData.location}
-              onChange={handleChange}
-              required
-            />
-          </div>
+        <select name="category" onChange={handleChange} required>
+          <option value="">-- Job Category --</option>
+          <option>IT</option>
+          <option>Marketing</option>
+          <option>HR</option>
+          <option>Sales</option>
+          <option>Finance</option>
+        </select>
 
-          <div className="input-group">
-            <i className="fas fa-align-left"></i>
-            <textarea
-              name="description"
-              placeholder="Job Description"
-              value={formData.description}
-              onChange={handleChange}
-              required
-            ></textarea>
-          </div>
+        <input type="text" name="perks" placeholder="Perks (e.g., WFH, Bonus)" onChange={handleChange} />
+        <input type="text" name="workingDays" placeholder="Working Days" onChange={handleChange} />
+        <input type="text" name="tags" placeholder="Tags (e.g., #Remote, #Urgent)" onChange={handleChange} />
 
-          <button type="submit" className="submit-btn">
-            <i className="fas fa-plus-circle"></i> Add Job
-          </button>
-        </form>
-      </div>
-
-    </>
+        <button type="submit">Post Job</button>
+      </form>
+    </div>
   );
 };
 

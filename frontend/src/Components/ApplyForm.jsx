@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import './ApplyForm.css';
+import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ApplyForm = () => {
+  let navigate=useNavigate()
+  const location = useLocation();
+const companyEmail = location.state?.companyEmail || '';
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     education: '',
     resume: '',
     message: ''
@@ -14,13 +20,16 @@ const ApplyForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    alert("🎉 Application Submitted Successfully!");
+   
     console.log('Form Data:', formData);
+    navigate('/user_poster')
+await axios.post('http://localhost:3232/email_apply',{...formData, companyEmail})
     setFormData({
       name: '',
       email: '',
+      phone: '',
       education: '',
       resume: '',
       message: ''
@@ -50,6 +59,18 @@ const ApplyForm = () => {
             name="email"
             placeholder="Your Email"
             value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="input-group">
+          <i className="fas fa-phone"></i>
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Your Phone Number"
+            value={formData.phone}
             onChange={handleChange}
             required
           />

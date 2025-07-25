@@ -22,7 +22,7 @@ const Sign_in_company = () => {
       const res = await axios.post('http://localhost:3232/sign_in_company', form);
       if (res.status === 200 || res.status === 201) {
         alert("Login successful!");
-        navigate('/');
+        navigate('/poster_page');
       }
     } catch (err) {
       console.error("Login Error:", err);

@@ -19,7 +19,7 @@ const handleSubmit = async (e) => {
 
     if (res.status === 200) {
       alert('Sign In Successful!');
-       navigate('/') // ← Redirect if needed
+       navigate('/user_poster') // ← Redirect if needed
       setFormData({ email: '', password: '' });
     }
   } catch (err) {

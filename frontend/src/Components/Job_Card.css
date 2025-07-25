@@ -1,0 +1,107 @@
+.add-job-btn {
+  background-color: #28a745;
+  color: #fff;
+  padding: 12px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.add-job-btn:hover {
+  background-color: #218838;
+}
+.job-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  padding: 25px;
+  max-width: 600px;
+  margin: 40px auto;
+  font-family: Arial, sans-serif;
+}
+
+.job-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.job-header img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.job-header h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.job-header p {
+  margin: 0;
+  color: #777;
+}
+
+.job-info p {
+  margin: 8px 0;
+  font-size: 15px;
+  color: #555;
+}
+
+.job-info strong {
+  color: #000;
+}
+
+.job-tags {
+  margin-top: 15px;
+}
+
+.job-tags span {
+  background: #e0f7fa;
+  color: #00796b;
+  padding: 6px 10px;
+  margin-right: 8px;
+  border-radius: 5px;
+  font-size: 13px;
+}
+
+.apply-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 16px;
+  background: #00796b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  margin-left: 20px;
+}
+.job-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.edit-btn {
+  background-color: #00b894;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #d63031;
+  color: white;
+}
