@@ -184,7 +184,7 @@ let companyEmail = req.body.companyEmail;
       `,
     });
 
-
+res.status(200).json({ message: "Job Email send successfully" });
 
 }catch(err){
     console.log(err);

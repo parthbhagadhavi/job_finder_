@@ -8,6 +8,7 @@ require('dotenv').config()
 const PORT = process.env.PORT || 3333;
 app.use(cors());
 app.use(express.json())
+
 app.use('/',require('./routers/index'))
 app.use('/uploads', express.static('uploads'));
 app.listen(PORT,(Error)=>{

@@ -24,6 +24,7 @@ module.exports.signIn_user=async(req,res)=>{
     let compare=await userSchema.findOne({email})
 
     if(compare.password==password){
+      
  return res.status(200).json({ message: "Login successful!", userSchema });
     }
 

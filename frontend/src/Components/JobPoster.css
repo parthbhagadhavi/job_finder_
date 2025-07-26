@@ -1,116 +1,215 @@
+/* Main container */
 .job-poster {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 4rem 2rem;
-  background: #f1f5f9;
-  font-family: 'Poppins', sans-serif;
-  gap: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.poster-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* Content section */
 .poster-content {
-  flex: 1 1 50%;
+  flex: 1;
   max-width: 600px;
 }
 
 .poster-heading {
-  font-size: 3rem;
-  color: #1e3a8a;
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
 }
 
 .poster-heading span {
-  color: #facc15;
+  color: #4299e1;
+  position: relative;
+}
+
+.poster-heading span::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: rgba(66, 153, 225, 0.3);
+  z-index: -1;
+  border-radius: 4px;
 }
 
 .poster-text {
   font-size: 1.1rem;
-  color: #475569;
+  line-height: 1.6;
+  color: #4a5568;
   margin-bottom: 2rem;
 }
 
+/* Buttons */
+.poster-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
 .poster-btn {
-  background-color: #2563eb;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  text-decoration: none;
+  padding: 0.9rem 1.8rem;
   border-radius: 8px;
-  transition: 0.3s ease;
-}
-.poster-btn2 {
-  background-color: #2563eb;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+  font-weight: 600;
   text-decoration: none;
-  border-radius: 8px;
-  transition: 0.3s ease;
-  margin-left: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  transition: all 0.3s ease;
 }
 
-.poster-btn:hover {
-  background-color: #1e3a8a;
-}
-.poster-btn2:hover {
-  background-color: #1e3a8a;
+.poster-btn i {
+  font-size: 1.1rem;
 }
 
+.employer-btn {
+  background-color: #4299e1;
+  color: white;
+  box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3);
+}
 
+.employer-btn:hover {
+  background-color: #3182ce;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(66, 153, 225, 0.4);
+}
+
+.jobseeker-btn {
+  background-color: white;
+  color: #4299e1;
+  border: 2px solid #4299e1;
+  box-shadow: 0 4px 15px rgba(66, 153, 225, 0.1);
+}
+
+.jobseeker-btn:hover {
+  background-color: #ebf8ff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(66, 153, 225, 0.2);
+}
+
+/* Stats */
+.poster-stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2b6cb0;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #718096;
+}
+
+/* Image section */
 .poster-image {
-  flex: 1 1 45%;
-  text-align: center;
+  flex: 1;
+  position: relative;
 }
 
-.poster-image img {
+.featured-image {
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
   border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease;
 }
 
+.featured-image:hover {
+  transform: scale(1.02);
+}
 
-/* Responsive Design */
+.image-badge {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  color: #2d3748;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 
-@media (max-width: 992px) {
-  .poster-content {
-    flex: 1 1 100%;
+.image-badge i {
+  color: #48bb78;
+  font-size: 1.2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .poster-container {
+    flex-direction: column;
     text-align: center;
   }
-
-  .poster-heading {
-    font-size: 2.5rem;
+  
+  .poster-content {
+    max-width: 100%;
   }
-
-  .poster-text {
-    font-size: 1rem;
+  
+  .poster-buttons {
+    justify-content: center;
   }
-
+  
+  .poster-stats {
+    justify-content: center;
+  }
+  
   .poster-image {
-    flex: 1 1 100%;
+    margin-top: 3rem;
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 640px) {
   .job-poster {
-    padding: 2rem 1rem;
+    padding: 3rem 1.5rem;
   }
-
+  
   .poster-heading {
     font-size: 2rem;
   }
-
-  .poster-text {
-    font-size: 0.95rem;
+  
+  .poster-buttons {
+    flex-direction: column;
   }
-
+  
   .poster-btn {
-    padding: 0.65rem 1.2rem;
-    font-size: 0.95rem;
+    width: 100%;
+    justify-content: center;
   }
-    .poster-btn2 {
-    padding: 0.65rem 1.2rem;
-    font-size: 0.95rem;
+  
+  .poster-stats {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .stat-item {
+    align-items: center;
   }
 }

@@ -20,7 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/add-job" element={<Add_full_page />} />
         <Route path="/applyform" element={< Apply_form />} />
-        <Route path="/applyform" element={< Apply_form />} />
+     
         <Route path="/edit-job/:id" element={<Edit_full_page />} />
         <Route path="/sign_up" element={< Sign_up_page />} />
         <Route path="/sign_in" element={< Sign_in_page />} />
