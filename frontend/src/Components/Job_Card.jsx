@@ -8,7 +8,17 @@ const Job_Card = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
+    // Check if company is logged in
+    const companyAuth = localStorage.getItem("companyAuth");
+
+    // Redirect if not company
     useEffect(() => {
+        if (!companyAuth) {
+            alert("Please log in as a company to access this page.");
+            navigate("/sign_in_company");
+            return;
+        }
+
         const fetchJobs = async () => {
             try {
                 const res = await axios.get('http://localhost:3232/get-jobs');
@@ -20,7 +30,7 @@ const Job_Card = () => {
             }
         };
         fetchJobs();
-    }, []);
+    }, [companyAuth, navigate]);
 
     const handleEdit = (job) => {
         navigate(`/edit-job/${job._id}`, { state: { job } });
@@ -149,7 +159,6 @@ const Job_Card = () => {
                         </div>
 
                         <div className="card-footer">
-                            
                             <a
                                 href={job.website}
                                 target="_blank"
@@ -158,6 +167,12 @@ const Job_Card = () => {
                             >
                                 <i className="fas fa-globe"></i> Website
                             </a>
+                            <button 
+                                className="apply-btn"
+                                onClick={() => handleApply(job)}
+                            >
+                                Apply Now
+                            </button>
                         </div>
 
                         <div className="admin-actions">

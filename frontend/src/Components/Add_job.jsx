@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Add_job.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Add_job = () => {
   let navigate = useNavigate();
+
+  
+  useEffect(() => {
+    const companyAuth = localStorage.getItem("companyAuth");
+    if (!companyAuth) {
+      navigate("/sign_in_company"); 
+    }
+  }, [navigate]);
+
   const [formData, setFormData] = useState({
     title: "",
     company: "",
@@ -46,7 +55,7 @@ const Add_job = () => {
     }
 
     try {
-      await axios.post('http://localhost:3232/add-job', data, {
+      await axios.post("http://localhost:3232/add-job", data, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
@@ -54,7 +63,7 @@ const Add_job = () => {
       setShowSuccessPopup(true);
       setTimeout(() => {
         setShowSuccessPopup(false);
-        navigate('/poster_page');
+        navigate("/poster_page");
       }, 2000);
     } catch (err) {
       console.error("Error posting job", err);
@@ -95,47 +104,47 @@ const Add_job = () => {
           <h2>Post a New Job Opportunity</h2>
           <p>Fill out the form below to list your job opening</p>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="job-form">
           <div className="form-section">
             <h3 className="section-title">Basic Information</h3>
             <div className="form-grid">
               <div className="form-group">
                 <label htmlFor="title">Job Title*</label>
-                <input 
-                  type="text" 
-                  id="title" 
-                  name="title" 
-                  placeholder="e.g. Frontend Developer" 
-                  onChange={handleChange} 
-                  required 
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  placeholder="e.g. Frontend Developer"
+                  onChange={handleChange}
+                  required
                 />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="company">Company Name*</label>
-                <input 
-                  type="text" 
-                  id="company" 
-                  name="company" 
-                  placeholder="Your company name" 
-                  onChange={handleChange} 
-                  required 
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  placeholder="Your company name"
+                  onChange={handleChange}
+                  required
                 />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="location">Job Location*</label>
-                <input 
-                  type="text" 
-                  id="location" 
-                  name="location" 
-                  placeholder="e.g. Bangalore, Remote" 
-                  onChange={handleChange} 
-                  required 
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  placeholder="e.g. Bangalore, Remote"
+                  onChange={handleChange}
+                  required
                 />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="type">Job Type*</label>
                 <select id="type" name="type" onChange={handleChange} required>
@@ -147,7 +156,7 @@ const Add_job = () => {
                   <option value="Contract">Contract</option>
                 </select>
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="category">Job Category*</label>
                 <select id="category" name="category" onChange={handleChange} required>
@@ -159,169 +168,169 @@ const Add_job = () => {
                   <option value="Finance">Finance</option>
                 </select>
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="salary">Salary Range</label>
-                <input 
-                  type="text" 
-                  id="salary" 
-                  name="salary" 
-                  placeholder="e.g. ₹8,00,000 - ₹12,00,000" 
-                  onChange={handleChange} 
+                <input
+                  type="text"
+                  id="salary"
+                  name="salary"
+                  placeholder="e.g. ₹8,00,000 - ₹12,00,000"
+                  onChange={handleChange}
                 />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="deadline">Application Deadline*</label>
-                <input 
-                  type="date" 
-                  id="deadline" 
-                  name="deadline" 
-                  onChange={handleChange} 
-                  required 
+                <input
+                  type="date"
+                  id="deadline"
+                  name="deadline"
+                  onChange={handleChange}
+                  required
                 />
               </div>
             </div>
           </div>
-          
+
           <div className="form-section">
             <h3 className="section-title">Requirements</h3>
             <div className="form-grid">
               <div className="form-group">
                 <label htmlFor="experience">Experience Required</label>
-                <input 
-                  type="text" 
-                  id="experience" 
-                  name="experience" 
-                  placeholder="e.g. 3-5 years" 
-                  onChange={handleChange} 
+                <input
+                  type="text"
+                  id="experience"
+                  name="experience"
+                  placeholder="e.g. 3-5 years"
+                  onChange={handleChange}
                 />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="qualification">Education Qualification</label>
-                <input 
-                  type="text" 
-                  id="qualification" 
-                  name="qualification" 
-                  placeholder="e.g. B.Tech in Computer Science" 
-                  onChange={handleChange} 
+                <input
+                  type="text"
+                  id="qualification"
+                  name="qualification"
+                  placeholder="e.g. B.Tech in Computer Science"
+                  onChange={handleChange}
                 />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="skills">Required Skills</label>
-                <input 
-                  type="text" 
-                  id="skills" 
-                  name="skills" 
-                  placeholder="e.g. React, Node.js, MongoDB" 
-                  onChange={handleChange} 
+                <input
+                  type="text"
+                  id="skills"
+                  name="skills"
+                  placeholder="e.g. React, Node.js, MongoDB"
+                  onChange={handleChange}
                 />
                 <small className="hint">Separate skills with commas</small>
               </div>
             </div>
           </div>
-          
+
           <div className="form-section">
             <h3 className="section-title">Job Details</h3>
             <div className="form-group">
               <label htmlFor="description">Job Description*</label>
-              <textarea 
-                id="description" 
-                name="description" 
-                rows="6" 
-                placeholder="Describe the responsibilities, expectations, and role details..." 
-                onChange={handleChange} 
-                required 
+              <textarea
+                id="description"
+                name="description"
+                rows="6"
+                placeholder="Describe the responsibilities, expectations, and role details..."
+                onChange={handleChange}
+                required
               />
             </div>
-            
+
             <div className="form-grid">
               <div className="form-group">
                 <label htmlFor="perks">Perks & Benefits</label>
-                <input 
-                  type="text" 
-                  id="perks" 
-                  name="perks" 
-                  placeholder="e.g. WFH, Health insurance, Bonus" 
-                  onChange={handleChange} 
+                <input
+                  type="text"
+                  id="perks"
+                  name="perks"
+                  placeholder="e.g. WFH, Health insurance, Bonus"
+                  onChange={handleChange}
                 />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="workingDays">Working Days/Hours</label>
-                <input 
-                  type="text" 
-                  id="workingDays" 
-                  name="workingDays" 
-                  placeholder="e.g. Monday-Friday, 9am-6pm" 
-                  onChange={handleChange} 
+                <input
+                  type="text"
+                  id="workingDays"
+                  name="workingDays"
+                  placeholder="e.g. Monday-Friday, 9am-6pm"
+                  onChange={handleChange}
                 />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="tags">Job Tags</label>
-                <input 
-                  type="text" 
-                  id="tags" 
-                  name="tags" 
-                  placeholder="e.g. #Remote, #Urgent, #Tech" 
-                  onChange={handleChange} 
+                <input
+                  type="text"
+                  id="tags"
+                  name="tags"
+                  placeholder="e.g. #Remote, #Urgent, #Tech"
+                  onChange={handleChange}
                 />
                 <small className="hint">Helps candidates find your job</small>
               </div>
             </div>
           </div>
-          
+
           <div className="form-section">
             <h3 className="section-title">Company Information</h3>
             <div className="form-grid">
               <div className="form-group">
                 <label htmlFor="logo">Company Logo</label>
                 <div className="file-upload">
-                  <input 
-                    type="file" 
-                    id="logo" 
-                    name="logo" 
-                    accept="image/*" 
-                    onChange={handleChange} 
+                  <input
+                    type="file"
+                    id="logo"
+                    name="logo"
+                    accept="image/*"
+                    onChange={handleChange}
                   />
                   <label htmlFor="logo" className="file-upload-label">
                     {formData.logo ? formData.logo.name : "Choose file..."}
                   </label>
                 </div>
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="website">Company Website</label>
-                <input 
-                  type="url" 
-                  id="website" 
-                  name="website" 
-                  placeholder="https://yourcompany.com" 
-                  onChange={handleChange} 
+                <input
+                  type="url"
+                  id="website"
+                  name="website"
+                  placeholder="https://yourcompany.com"
+                  onChange={handleChange}
                 />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="email">Contact Email*</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  name="email" 
-                  placeholder="recruiter@company.com" 
-                  onChange={handleChange} 
-                  required 
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="recruiter@company.com"
+                  onChange={handleChange}
+                  required
                 />
                 <small className="hint">For applicant communications</small>
               </div>
             </div>
           </div>
-          
+
           <div className="form-actions">
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="submit-button"
               disabled={isSubmitting}
             >

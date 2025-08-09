@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ApplyForm.css';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const ApplyForm = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const companyEmail = location.state?.companyEmail || '';
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,16 +18,29 @@ const ApplyForm = () => {
     message: ''
   });
 
+  // 🔹 Authentication Check on Mount
+  useEffect(() => {
+    const userData = localStorage.getItem('userAuth');
+    if (!userData) {
+      alert('You must log in to apply for a job.');
+      navigate('/sign_in'); // redirect to user login page
+    }
+  }, [navigate]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
-      await axios.post('http://localhost:3232/email_apply', {...formData, companyEmail});
+      await axios.post('http://localhost:3232/email_apply', {
+        ...formData,
+        companyEmail
+      });
+      alert('Application submitted successfully!');
       navigate('/user_poster');
     } catch (error) {
       console.error('Application error:', error);
@@ -44,7 +57,7 @@ const ApplyForm = () => {
           <h2>Apply for This Position</h2>
           <p>Fill out the form below to submit your application</p>
         </div>
-        
+
         <form className="application-form" onSubmit={handleSubmit}>
           <div className="form-section">
             <h3 className="section-title">Personal Information</h3>
@@ -63,7 +76,7 @@ const ApplyForm = () => {
                   required
                 />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="email">
                   <i className="fas fa-envelope icon"></i> Email Address*
@@ -78,7 +91,7 @@ const ApplyForm = () => {
                   required
                 />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="phone">
                   <i className="fas fa-phone icon"></i> Phone Number*
@@ -95,7 +108,7 @@ const ApplyForm = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="form-section">
             <h3 className="section-title">Education & Experience</h3>
             <div className="form-group">
@@ -112,7 +125,7 @@ const ApplyForm = () => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="resume">
                 <i className="fas fa-file-alt icon"></i> Resume/CV Link*
@@ -126,10 +139,12 @@ const ApplyForm = () => {
                 onChange={handleChange}
                 required
               />
-              <small className="form-hint">Upload your resume to Google Drive/Dropbox and share the link</small>
+              <small className="form-hint">
+                Upload your resume to Google Drive/Dropbox and share the link
+              </small>
             </div>
           </div>
-          
+
           <div className="form-section">
             <h3 className="section-title">Additional Information</h3>
             <div className="form-group">
@@ -147,10 +162,10 @@ const ApplyForm = () => {
               <small className="form-hint">Minimum 100 characters</small>
             </div>
           </div>
-          
+
           <div className="form-actions">
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="submit-button"
               disabled={isSubmitting}
             >

@@ -6,6 +6,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 const Edit_job = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+
+  // ✅ Restrict to companyAuth only
+  useEffect(() => {
+    const companyAuth = localStorage.getItem("companyAuth");
+    if (!companyAuth) {
+      alert("Only company accounts can access this page.");
+      navigate("/sign_in_company");
+    }
+  }, [navigate]);
+
   const [formData, setFormData] = useState({
     title: "",
     company: "",
@@ -29,9 +39,16 @@ const Edit_job = () => {
   const [oldLogo, setOldLogo] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // ✅ Pre-fill form
   useEffect(() => {
+    const companyData = JSON.parse(localStorage.getItem("companyAuth"));
     if (state?.job) {
-      setFormData({ ...state.job, logo: null });
+      setFormData({
+        ...state.job,
+        logo: null,
+        company: companyData?.name || state.job.company || "",
+        email: companyData?.email || state.job.email || ""
+      });
       setOldLogo(state.job.logo);
     }
   }, [state]);
@@ -50,16 +67,14 @@ const Edit_job = () => {
 
     const data = new FormData();
     for (let key in formData) {
-      if (formData[key] !== null) {
+      if (formData[key] !== null && formData[key] !== undefined) {
         data.append(key, formData[key]);
       }
     }
 
     try {
       await axios.put(`http://localhost:3232/update-job/${state.job._id}`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
+        headers: { "Content-Type": "multipart/form-data" }
       });
       alert("Job Updated Successfully!");
       navigate("/poster_page");
@@ -75,293 +90,110 @@ const Edit_job = () => {
     <div className="edit-job-container">
       <div className="edit-job-card">
         <div className="form-header">
-          <h2>Edit Job Listing</h2>
-          <p>Update the details of your job posting</p>
+          <h2>Edit Job</h2>
+          <p>Update job details below</p>
         </div>
 
         <form onSubmit={handleSubmit} className="edit-job-form">
-          <div className="form-section">
-            <h3 className="section-title">Basic Information</h3>
-            <div className="form-grid">
-              <div className="form-group">
-                <label htmlFor="title">Job Title*</label>
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  placeholder="e.g. Frontend Developer"
-                  value={formData.title}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="company">Company Name*</label>
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  placeholder="Your company name"
-                  value={formData.company}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="location">Job Location*</label>
-                <input
-                  type="text"
-                  id="location"
-                  name="location"
-                  placeholder="e.g. Bangalore, Remote"
-                  value={formData.location}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="type">Job Type*</label>
-                <select
-                  id="type"
-                  name="type"
-                  value={formData.type}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select job type</option>
-                  <option value="Full-Time">Full-Time</option>
-                  <option value="Part-Time">Part-Time</option>
-                  <option value="Internship">Internship</option>
-                  <option value="Freelance">Freelance</option>
-                  <option value="Contract">Contract</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="category">Job Category*</label>
-                <select
-                  id="category"
-                  name="category"
-                  value={formData.category}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select category</option>
-                  <option value="IT">IT</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="HR">HR</option>
-                  <option value="Sales">Sales</option>
-                  <option value="Finance">Finance</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="salary">Salary Range</label>
-                <input
-                  type="text"
-                  id="salary"
-                  name="salary"
-                  placeholder="e.g. ₹8,00,000 - ₹12,00,000"
-                  value={formData.salary}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="deadline">Application Deadline*</label>
-                <input
-                  type="date"
-                  id="deadline"
-                  name="deadline"
-                  value={formData.deadline?.split('T')[0]}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="form-section">
-            <h3 className="section-title">Requirements</h3>
-            <div className="form-grid">
-              <div className="form-group">
-                <label htmlFor="experience">Experience Required</label>
-                <input
-                  type="text"
-                  id="experience"
-                  name="experience"
-                  placeholder="e.g. 3-5 years"
-                  value={formData.experience}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="qualification">Education Qualification</label>
-                <input
-                  type="text"
-                  id="qualification"
-                  name="qualification"
-                  placeholder="e.g. B.Tech in Computer Science"
-                  value={formData.qualification}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="skills">Required Skills</label>
-                <input
-                  type="text"
-                  id="skills"
-                  name="skills"
-                  placeholder="e.g. React, Node.js, MongoDB"
-                  value={formData.skills}
-                  onChange={handleChange}
-                />
-                <small className="form-hint">Separate skills with commas</small>
-              </div>
-            </div>
-          </div>
-
-          <div className="form-section">
-            <h3 className="section-title">Job Details</h3>
+          <div className="form-grid">
+            {/* Row 1 */}
             <div className="form-group">
-              <label htmlFor="description">Job Description*</label>
-              <textarea
-                id="description"
-                name="description"
-                rows="6"
-                placeholder="Describe the responsibilities, expectations, and role details..."
-                value={formData.description}
-                onChange={handleChange}
-                required
-              />
+              <label>Job Title</label>
+              <input type="text" name="title" value={formData.title} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label>Company Name</label>
+              <input type="text" name="company" value={formData.company} readOnly />
             </div>
 
-            <div className="form-grid">
-              <div className="form-group">
-                <label htmlFor="perks">Perks & Benefits</label>
-                <input
-                  type="text"
-                  id="perks"
-                  name="perks"
-                  placeholder="e.g. WFH, Health insurance, Bonus"
-                  value={formData.perks}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="workingDays">Working Days/Hours</label>
-                <input
-                  type="text"
-                  id="workingDays"
-                  name="workingDays"
-                  placeholder="e.g. Monday-Friday, 9am-6pm"
-                  value={formData.workingDays}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="tags">Job Tags</label>
-                <input
-                  type="text"
-                  id="tags"
-                  name="tags"
-                  placeholder="e.g. #Remote, #Urgent, #Tech"
-                  value={formData.tags}
-                  onChange={handleChange}
-                />
-                <small className="form-hint">Helps candidates find your job</small>
-              </div>
+            {/* Row 2 */}
+            <div className="form-group">
+              <label>Location</label>
+              <input type="text" name="location" value={formData.location} onChange={handleChange} required />
             </div>
-          </div>
+            <div className="form-group">
+              <label>Job Type</label>
+              <input type="text" name="type" value={formData.type} onChange={handleChange} required />
+            </div>
 
-          <div className="form-section">
-            <h3 className="section-title">Company Information</h3>
-            <div className="form-grid">
-              <div className="form-group">
-                <label htmlFor="logo">Company Logo</label>
-                <div className="file-upload">
-                  <input
-                    type="file"
-                    id="logo"
-                    name="logo"
-                    accept="image/*"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="logo" className="file-upload-label">
-                    {formData.logo ? formData.logo.name : "Choose new logo..."}
-                  </label>
-                </div>
-                {oldLogo && (
-                  <div className="logo-preview">
-                    <p>Current Logo:</p>
-                    <img
-                      src={`http://localhost:3232/uploads/images/${oldLogo}`}
-                      alt="Current Company Logo"
-                      className="current-logo"
-                    />
-                  </div>
-                )}
-              </div>
+            {/* Row 3 */}
+            <div className="form-group">
+              <label>Salary</label>
+              <input type="number" name="salary" value={formData.salary} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label>Deadline</label>
+              <input type="date" name="deadline" value={formData.deadline} onChange={handleChange} required />
+            </div>
 
-              <div className="form-group">
-                <label htmlFor="website">Company Website</label>
-                <input
-                  type="url"
-                  id="website"
-                  name="website"
-                  placeholder="https://yourcompany.com"
-                  value={formData.website}
-                  onChange={handleChange}
-                />
-              </div>
+            {/* Row 4 */}
+            <div className="form-group">
+              <label>Experience</label>
+              <input type="text" name="experience" value={formData.experience} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label>Qualification</label>
+              <input type="text" name="qualification" value={formData.qualification} onChange={handleChange} required />
+            </div>
 
-              <div className="form-group">
-                <label htmlFor="email">Contact Email*</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="recruiter@company.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-                <small className="form-hint">For applicant communications</small>
-              </div>
+            {/* Row 5 */}
+            <div className="form-group full-width">
+              <label>Description</label>
+              <textarea name="description" value={formData.description} onChange={handleChange} required />
+            </div>
+
+            <div className="form-group full-width">
+              <label>Skills</label>
+              <input type="text" name="skills" value={formData.skills} onChange={handleChange} required />
+            </div>
+
+            {/* Row 6 */}
+            <div className="form-group">
+              <label>Website</label>
+              <input type="url" name="website" value={formData.website} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label>Email</label>
+              <input type="email" name="email" value={formData.email} readOnly />
+            </div>
+
+            {/* Row 7 */}
+            <div className="form-group">
+              <label>Category</label>
+              <input type="text" name="category" value={formData.category} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label>Perks</label>
+              <input type="text" name="perks" value={formData.perks} onChange={handleChange} />
+            </div>
+
+            {/* Row 8 */}
+            <div className="form-group">
+              <label>Working Days</label>
+              <input type="text" name="workingDays" value={formData.workingDays} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label>Tags</label>
+              <input type="text" name="tags" value={formData.tags} onChange={handleChange} />
+            </div>
+
+            {/* Logo Upload */}
+            <div className="form-group full-width">
+              <label>Logo</label>
+              {oldLogo && !formData.logo && (
+                <img src={oldLogo} alt="Old Logo" width="80" style={{ display: "block", marginBottom: "10px" }} />
+              )}
+              <input type="file" name="logo" accept="image/*" onChange={handleChange} />
             </div>
           </div>
 
           <div className="form-actions">
-            <button
-              type="submit"
-              className="submit-button"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <>
-                  <i className="fas fa-spinner fa-spin"></i> Updating...
-                </>
-              ) : (
-                <>
-                  <i className="fas fa-save"></i> Update Job Listing
-                </>
-              )}
+            <button type="submit" className="submit-button" disabled={isSubmitting}>
+              {isSubmitting ? "Updating..." : "Update Job"}
             </button>
-            <button
-              type="button"
-              className="cancel-button"
-              onClick={() => navigate("/poster_page")}
-            >
+            <button type="button" className="cancel-button" onClick={() => navigate("/poster_page")}>
               Cancel
             </button>
-            <small className="form-note">* indicates required field</small>
           </div>
         </form>
       </div>

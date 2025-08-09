@@ -48,7 +48,7 @@ const CompanyCards = () => {
             </div>
           </div>
           <div className="card-footer">
-            <Link to="/apply" className="apply-button">
+            <Link to="#" className="apply-button">
               Apply Now <i className="fas fa-arrow-right"></i>
             </Link>
             <button className="save-button">
@@ -98,7 +98,7 @@ const CompanyCards = () => {
             </div>
           </div>
           <div className="card-footer">
-            <Link to="/apply" className="apply-button">
+            <Link to="#" className="apply-button">
               Apply Now <i className="fas fa-arrow-right"></i>
             </Link>
             <button className="save-button">
@@ -148,7 +148,7 @@ const CompanyCards = () => {
             </div>
           </div>
           <div className="card-footer">
-            <Link to="/apply" className="apply-button">
+            <Link to="#" className="apply-button">
               Apply Now <i className="fas fa-arrow-right"></i>
             </Link>
             <button className="save-button">

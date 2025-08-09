@@ -15,20 +15,24 @@ const Sign_in_company = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      const res = await axios.post('http://localhost:3232/sign_in_company', form);
-      if (res.status === 200 || res.status === 201) {
-        alert("Login successful!");
-        navigate('/poster_page');
-      }
-    } catch (err) {
-      console.error("Login Error:", err);
-      alert("Login failed! Please check credentials.");
+  try {
+    const res = await axios.post('http://localhost:3232/sign_in_company', form);
+
+    if (res.status === 200 || res.status === 201) {
+      // Store company authentication in localStorage
+      localStorage.setItem("companyAuth", JSON.stringify(res.data));
+
+      alert("Login successful!");
+      navigate('/poster_page');
     }
-  };
+  } catch (err) {
+    console.error("Login Error:", err);
+    alert("Login failed! Please check credentials.");
+  }
+};
 
   return (
     <div className="signin-container">

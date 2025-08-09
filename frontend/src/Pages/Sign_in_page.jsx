@@ -18,18 +18,22 @@ const handleSubmit = async (e) => {
     const res = await axios.post('http://localhost:3232/sign_in_user', formData);
 
     if (res.status === 200) {
+      // Store user authentication in localStorage
+      localStorage.setItem("userAuth", JSON.stringify(res.data));
+
       alert('Sign In Successful!');
-       navigate('/user_poster') // ← Redirect if needed
+      navigate('/user_poster');
       setFormData({ email: '', password: '' });
     }
   } catch (err) {
     if (err.response) {
-      alert(err.response.data.message); // Show specific error
+      alert(err.response.data.message);
     } else {
       alert('Login failed!');
     }
   }
 };
+
 
   return (
     <div className="signin-container">

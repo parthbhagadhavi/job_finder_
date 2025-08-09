@@ -171,8 +171,8 @@ let companyEmail = req.body.companyEmail;
     const info = await transporter.sendMail({
         from: email,
         to: companyEmail,
-        subject: "OTP for Password Reset",
-        text: "Your OTP",
+        subject: "Job Information",
+        text: "all Details",
         html:  `
         <h3>You've received a new application!</h3>
         <p><strong>Name:</strong> ${data.name}</p>
